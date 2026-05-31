@@ -264,3 +264,55 @@ body {
 .glow-button:active {
   transform: translateY(-1px) scale(0.98) !important;
 }
+
+/* ============================================================
+   iOS STYLING ENHANCEMENTS
+   ============================================================ */
+
+/* iOS Typography */
+.ios-font {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif;
+  letter-spacing: -0.015em;
+}
+
+/* Authentic iOS Vibrancy Blur */
+.ios-blur {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background-color: rgba(255, 255, 255, 0.65);
+}
+.dark .ios-blur {
+  background-color: rgba(28, 28, 30, 0.65);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* iOS Bottom Sheet Modal */
+.ios-sheet {
+  border-radius: 38px 38px 0 0;
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.12);
+  transform-origin: bottom center;
+  animation: slideUpSheet 0.55s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+.dark .ios-sheet {
+  box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes slideUpSheet {
+  from { transform: translateY(100%); opacity: 0.5; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* iOS Springy Button Active State */
+.ios-button {
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+.ios-button:active {
+  transform: scale(0.93) !important;
+  opacity: 0.85;
+}
+
+/* Smooth iOS List Transition */
+.ios-list-item {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s;
+}
+

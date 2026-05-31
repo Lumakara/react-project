@@ -162,8 +162,8 @@ export default function AdminDashboard({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-[9999] p-4">
-      <div className="bg-white dark:bg-gray-900 rounded-3xl w-full max-w-4xl max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-gray-200 dark:border-gray-800 transform transition-all duration-300 scale-100 opacity-100">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-end sm:items-center justify-center z-[9999] sm:p-4">
+      <div className="ios-blur ios-sheet sm:rounded-3xl w-full max-w-4xl max-h-[90vh] overflow-y-auto p-6 sm:p-8 border border-gray-200/50 dark:border-gray-800/50">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">

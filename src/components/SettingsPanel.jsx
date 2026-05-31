@@ -15,7 +15,7 @@ export default function SettingsPanel({
   return (
     <div
       id="settingsPanel"
-      className={`settings-panel fixed top-0 right-0 h-full w-80 bg-white dark:bg-gray-900 shadow-[0_0_40px_rgba(0,0,0,0.3)] z-50 p-6 overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
+      className={`settings-panel fixed top-0 right-0 h-full w-80 ios-blur shadow-[-10px_0_40px_rgba(0,0,0,0.15)] z-50 p-6 overflow-y-auto transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >

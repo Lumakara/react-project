@@ -141,7 +141,7 @@ function AppContent() {
       />
 
       {/* HEADER NAVBAR */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/75 dark:bg-gray-900/75 backdrop-blur-xl border-b border-gray-200 dark:border-gray-800 transition-colors">
+      <header className="fixed top-0 left-0 right-0 z-50 ios-blur ios-font border-b border-gray-200/50 dark:border-gray-800/50 transition-colors">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <span className="font-pacifico text-2xl font-bold text-primary">Fatkul</span>
@@ -158,7 +158,7 @@ function AppContent() {
                 sfx.playClick();
                 setIsSettingsOpen(true);
               }}
-              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-primary/20 text-gray-700 dark:text-gray-200 transition-all"
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100/80 dark:bg-gray-800/80 hover:bg-primary/20 text-gray-700 dark:text-gray-200 ios-button"
             >
               <i className="ri-settings-line text-lg"></i>
             </button>
@@ -179,8 +179,8 @@ function AppContent() {
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent"
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+              className="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent ios-font tracking-tight"
             >
               {t.welcome_title}
             </motion.h1>
@@ -188,8 +188,8 @@ function AppContent() {
             <motion.p
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto font-medium"
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+              className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto font-medium ios-font"
             >
               {t.welcome_desc}
             </motion.p>
@@ -197,12 +197,12 @@ function AppContent() {
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+              transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.2 }}
               className="flex flex-wrap justify-center gap-4"
             >
               <button
                 onClick={handleDownloadCv}
-                className="glow-button bg-primary hover:bg-primary/95 text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-2 shadow-lg shadow-primary/25 hover:scale-105 active:scale-95 transition-all"
+                className="glow-button bg-primary hover:bg-primary/95 text-white px-8 py-4 rounded-3xl font-bold flex items-center space-x-2 shadow-lg shadow-primary/25 ios-button"
               >
                 <i className="ri-download-line"></i>
                 <span>{t.download_cv}</span>
@@ -210,7 +210,7 @@ function AppContent() {
               
               <a
                 href="#contact"
-                className="glow-button bg-secondary hover:bg-secondary/95 text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-2 shadow-lg shadow-secondary/25 hover:scale-105 active:scale-95 transition-all"
+                className="glow-button bg-secondary hover:bg-secondary/95 text-white px-8 py-4 rounded-3xl font-bold flex items-center space-x-2 shadow-lg shadow-secondary/25 ios-button"
               >
                 <i className="ri-mail-line"></i>
                 <span>{t.contact_me}</span>
@@ -218,7 +218,7 @@ function AppContent() {
 
               <button
                 onClick={() => handleNavigatePage('game.html')}
-                className="glow-button bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-2 shadow-lg hover:scale-105 active:scale-95 transition-all"
+                className="glow-button bg-gradient-to-r from-purple-500 to-pink-500 text-white px-8 py-4 rounded-3xl font-bold flex items-center space-x-2 shadow-lg ios-button"
               >
                 <i className="ri-gamepad-line"></i>
                 <span>{t.play_game}</span>
@@ -454,7 +454,7 @@ function AppContent() {
                 
                 <button
                   type="submit"
-                  className="group relative w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-xl font-bold overflow-hidden shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2"
+                  className="group relative w-full bg-gradient-to-r from-primary to-secondary text-white py-4 rounded-xl font-bold overflow-hidden shadow-lg shadow-primary/20 ios-button flex items-center justify-center gap-2"
                 >
                   <span>{t.send_message}</span>
                   <i className="ri-send-plane-line transition-transform group-hover:translate-x-1"></i>

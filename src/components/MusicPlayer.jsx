@@ -159,7 +159,7 @@ export default function MusicPlayer({ currentTrackIdx, setTrackIdx }) {
             sfx.playOpenModal();
             setShowDetail(true);
           }}
-          className="w-[94%] max-w-3xl rounded-2xl bg-white/90 dark:bg-gray-900/95 backdrop-blur-xl shadow-lg border border-gray-200 dark:border-gray-800 p-2 cursor-pointer transform hover:scale-[1.01] active:scale-[0.99] transition-all"
+          className="w-[94%] max-w-3xl rounded-3xl ios-blur shadow-lg border border-gray-200/50 dark:border-gray-800/50 p-2 cursor-pointer ios-button"
         >
           <div className="flex items-center gap-3 px-2 py-1">
             <img
@@ -210,14 +210,14 @@ export default function MusicPlayer({ currentTrackIdx, setTrackIdx }) {
       {showDetail && (
         <div className="fixed inset-0 z-[9998] flex items-end sm:items-center justify-center p-0 sm:p-4">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             onClick={() => {
               sfx.playClick();
               setShowDetail(false);
             }}
           />
 
-          <div className="relative w-full sm:max-w-md bg-white dark:bg-gray-900 rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl z-10 border border-gray-200 dark:border-gray-800 max-h-[85vh] overflow-y-auto transform animate-slideUp">
+          <div className="relative w-full sm:max-w-md ios-blur ios-sheet sm:rounded-3xl p-6 z-10 border border-gray-200/50 dark:border-gray-800/50 max-h-[90vh] overflow-y-auto">
             {/* Close Button */}
             <button
               onClick={() => {
