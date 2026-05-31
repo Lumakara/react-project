@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snake Game - Fakhul Rohman</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+<style>
+  :root {
+    --color-primary: #3b82f6;
+    --color-secondary: #8b5cf6;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  .logo-font {
+    font-family: 'Pacifico', cursive;
+  }
+  .game-canvas {
+    border: 3px solid var(--color-primary);
+    background: #1e293b;
+    box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+  }
+  .score-display {
+    background: rgba(59, 130, 246, 0.05);
+    border: 2px solid rgba(59, 130, 246, 0.15);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+  }
+  .game-over-modal {
+    backdrop-filter: blur(12px);
+    background: rgba(15, 23, 42, 0.8);
+    transition: opacity 0.3s ease;
+  }
+  .pulse-animation {
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  .control-btn {
+    background: #374151;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .control-btn:active {
+    transform: scale(0.95);
+    background: #4b5563;
+  }
+  .dark .score-display {
+    background: rgba(139, 92, 246, 0.05);
+    border-color: rgba(139, 92, 246, 0.15);
+  }
+</style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white min-h-screen transition-colors duration-300">
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors">
+<div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+<div class="logo-font text-2xl font-bold text-primary">Fatkul</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors flex items-center space-x-2 font-semibold">
+<i class="ri-arrow-left-line"></i>
+<span>Back to Portfolio</span>
+</a>
+<span class="text-gray-500 dark:text-gray-400 font-semibold">|</span>
+<span class="text-gray-700 dark:text-gray-300 font-bold">Snake Game</span>
+</nav>
+<div class="flex items-center space-x-4">
+<button id="pauseBtn" class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:scale-105 active:scale-95 transition-all shadow-md">
+<i class="ri-pause-line text-lg"></i>
+</button>
+<button id="restartBtn" class="w-10 h-10 flex items-center justify-center rounded-full bg-secondary text-white hover:scale-105 active:scale-95 transition-all shadow-md">
+<i class="ri-refresh-line text-lg"></i>
+</button>
+</div>
+</div>
+</header>
+
+<main class="pt-24 pb-12 min-h-screen flex items-center justify-center p-6">
+<div class="w-full max-w-6xl mx-auto">
+<div class="grid lg:grid-cols-3 gap-8 items-start">
+<div class="lg:col-span-2">
+<div class="text-center mb-6">
+<h1 class="text-4xl font-bold mb-2 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Snake Game</h1>
+<p class="text-gray-600 dark:text-gray-400">Use arrow keys or touch controls to play</p>
+</div>
+<div class="flex justify-center mb-6">
+<canvas id="gameCanvas" class="game-canvas" width="600" height="400"></canvas>
+</div>
+<div class="flex justify-center space-x-4 mb-6">
+<button id="startBtn" class="glow-button bg-gradient-to-r from-primary to-secondary text-white px-8 py-4 rounded-2xl font-bold flex items-center space-x-2 shadow-lg hover:scale-105 active:scale-95 transition-all pulse-animation">
+<i class="ri-play-line"></i>
+<span>Start Game</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-4 max-w-xs mx-auto">
+<div></div>
+<button class="control-btn w-16 h-16 rounded-2xl text-white flex items-center justify-center" data-direction="up">
+<i class="ri-arrow-up-line text-2xl"></i>
+</button>
+<div></div>
+<button class="control-btn w-16 h-16 rounded-2xl text-white flex items-center justify-center" data-direction="left">
+<i class="ri-arrow-left-line text-2xl"></i>
+</button>
+<div class="w-16 h-16 bg-gray-200 dark:bg-gray-800 rounded-2xl flex items-center justify-center shadow-inner">
+<i class="ri-gamepad-line text-2xl text-gray-400 dark:text-gray-600"></i>
+</div>
+<button class="control-btn w-16 h-16 rounded-2xl text-white flex items-center justify-center" data-direction="right">
+<i class="ri-arrow-right-line text-2xl"></i>
+</button>
+<div></div>
+<button class="control-btn w-16 h-16 rounded-2xl text-white flex items-center justify-center" data-direction="down">
+<i class="ri-arrow-down-line text-2xl"></i>
+</button>
+<div></div>
+</div>
+</div>
+
+<div class="space-y-6">
+<div class="score-display p-6 rounded-2xl">
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
+<i class="ri-trophy-line text-2xl text-primary"></i>
+</div>
+<h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">Current Score</h3>
+<div id="currentScore" class="text-4xl font-bold text-primary mb-4">0</div>
+<div class="text-sm text-gray-500 dark:text-gray-400">Length: <span id="snakeLength">1</span></div>
+</div>
+</div>
+
+<div class="score-display p-6 rounded-2xl">
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 bg-secondary/20 rounded-full flex items-center justify-center">
+<i class="ri-medal-line text-2xl text-secondary"></i>
+</div>
+<h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">High Score</h3>
+<div id="highScore" class="text-4xl font-bold text-secondary mb-4">0</div>
+<div class="text-sm text-gray-500 dark:text-gray-400">Best Length: <span id="bestLength">1</span></div>
+</div>
+</div>
+
+<div class="score-display p-6 rounded-2xl">
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 bg-green-150/20 dark:bg-green-950/20 rounded-full flex items-center justify-center">
+<i class="ri-speed-line text-2xl text-green-500"></i>
+</div>
+<h3 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">Game Status</h3>
+<div id="gameStatus" class="text-lg font-medium text-green-500">Ready to Play</div>
+<div class="text-sm text-gray-500 dark:text-gray-400 mt-2">Level: <span id="gameLevel">1</span></div>
+</div>
+</div>
+
+<div class="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-700 transition-colors">
+<h3 class="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-200">How to Play</h3>
+<ul class="space-y-2 text-sm text-gray-600 dark:text-gray-450">
+<li class="flex items-center space-x-2">
+<i class="ri-arrow-right-line text-primary text-base"></i>
+<span>Use arrow keys or Up/Down/Left/Right buttons</span>
+</li>
+<li class="flex items-center space-x-2">
+<i class="ri-apple-line text-red-500 text-base"></i>
+<span>Eat red food to grow and score points</span>
+</li>
+<li class="flex items-center space-x-2">
+<i class="ri-close-line text-red-500 text-base"></i>
+<span>Don't crash into walls or yourself</span>
+</li>
+<li class="flex items-center space-x-2">
+<i class="ri-speed-up-line text-green-500 text-base"></i>
+<span>Game speed and level increase as you grow</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<div id="gameOverModal" class="game-over-modal fixed inset-0 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md mx-4 text-center shadow-2xl border border-gray-100 dark:border-gray-700 max-w-sm w-full">
+<div class="w-20 h-20 mx-auto mb-6 bg-red-100 dark:bg-red-950/40 rounded-full flex items-center justify-center">
+<i class="ri-skull-line text-3xl text-red-500"></i>
+</div>
+<h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Game Over!</h2>
+<div class="mb-6">
+<p class="text-gray-500 dark:text-gray-400 mb-2">Final Score</p>
+<div id="finalScore" class="text-4xl font-bold text-primary mb-4">0</div>
+<div id="newHighScore" class="hidden text-lg font-semibold text-secondary mb-2 animate-bounce">🎉 New High Score!</div>
+</div>
+<div class="flex flex-col gap-3">
+<button id="playAgainBtn" class="w-full bg-primary hover:bg-primary/95 text-white py-3.5 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-primary/20">
+Play Again
+</button>
+<a href="index.html" class="w-full bg-gray-250 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-3.5 rounded-2xl font-bold hover:bg-gray-300 dark:hover:bg-gray-650 transition-colors flex items-center justify-center">
+Back to Portfolio
+</a>
+</div>
+</div>
+</div>
+
+<div id="pauseModal" class="game-over-modal fixed inset-0 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-gray-800 rounded-3xl p-8 max-w-md mx-4 text-center shadow-2xl border border-gray-100 dark:border-gray-700 max-w-sm w-full">
+<div class="w-20 h-20 mx-auto mb-6 bg-blue-100 dark:bg-blue-950/40 rounded-full flex items-center justify-center">
+<i class="ri-pause-line text-3xl text-blue-500"></i>
+</div>
+<h2 class="text-3xl font-bold mb-4 text-gray-800 dark:text-white">Game Paused</h2>
+<p class="text-gray-500 dark:text-gray-400 mb-6">Take a break and resume when ready</p>
+<div class="flex flex-col gap-3">
+<button id="resumeBtn" class="w-full bg-primary hover:bg-primary/95 text-white py-3.5 rounded-2xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-md shadow-primary/20">
+Resume Game
+</button>
+<button id="quitBtn" class="w-full bg-gray-250 dark:bg-gray-700 text-gray-800 dark:text-gray-200 py-3.5 rounded-2xl font-bold hover:bg-gray-300 dark:hover:bg-gray-650 transition-colors">
+Quit Game
+</button>
+</div>
+</div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
